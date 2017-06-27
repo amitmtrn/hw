@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8"/>
+
+<head>
+       <title>TCWD15 - HW-A-1 - Stocks Prices</title>
+
+       <!-- jQuery library -->
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+       <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+       <style>
+           div {
+               display: inline-block;
+               float: left;
+           }
+      </style>
+
+
+  </head>
+
+<body>
+
+	<header>
+
+  </header>
+
+	<main>
+
+
+
+		<section>
+      <div class="container">
+        <div class="inner"></div>
+      </div>
+
+		</section>
+
+	</main>
+
+
+
+  <script>
+
+      $(document).ready(function() {
+
+        var startTime = new Date().getTime();
+        var i=0;
+        var interval = setInterval(function(){
+
+            if(new Date().getTime() - startTime > 60000){
+                console.log('end now');
+                clearInterval(interval);
+                return;
+            }
+
+            fetch('https://secure-castle-8699.herokuapp.com/')
+            .then((res) =>{
+                return res.json()
+              })
+            .then((data) => {
+               $( ".inner" ).append( "<div id='" + i + "'></div>" );
+               $( "#" + i ).css( "height", data.num*10 );
+               $( "#" + i ).css( "border", "3px solid green" );
+              console.log(data);
+            })
+            i=i+1;
+            console.log(i);
+
+        }, 1000);
+      });
+
+  </script>
+
+  </body>
+</html>
