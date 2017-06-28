@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+       <title>TCWD15 - Lec2Ex1</title>
+</head>
+
+<body>
+
+  <button type="button" name="btn1" data-js="button1">button 1</button>
+  <button type="button" name="btn2" data-js="button2">button 2</button>
+  <button type="button" name="btn3" data-js="button3">button 3</button>
+
+  <script>
+
+  //first button will create an object with timestamp and random number and will put it in array
+  //second button will alert the last object from the array
+  // the third button will remove an object from the array
+
+  (function() { //self invoking function allows to keep scope independent and secure inside the function
+      console.log("hello world 1");
+      var arr = [];
+
+      var clickButton1 = document.querySelector('[data-js="button1"]');
+      	clickButton1.addEventListener('click', function() {
+          console.log("hello world");
+          var obj = {
+            timeStamp : Date.now(),
+            rndNum : Math.random()
+          };
+          console.log(obj);
+          arr.push(obj);
+
+      });
+      var clickButton2 = document.querySelector('[data-js="button2"]');
+        clickButton2.addEventListener('click', function() {
+      //  alert(arr[0].rndNum);
+          alert(JSON.stringify(arr[arr.length-1]));
+    });
+      var clickButton3 = document.querySelector('[data-js="button3"]');
+        clickButton3.addEventListener('click', function() {
+          arr.pop();
+          console.log(arr);
+      });
+
+
+  }());
+
+  </script>
+
+  </body>
+</html>
