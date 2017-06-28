@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <script type="text/javascript">
+
+      function Car(brand, motor, wheels) {
+        this.brand = brand;
+        this.motor =  motor;
+        this.wheels = wheels;
+      }
+
+      Car.prototype = {
+        whistle: function() {
+          return 'boop!!!';
+        },
+        drive: function() {
+          return 'drive';
+        },
+        turnLeft: function() {
+          return 'turn left';
+        }
+      }
+
+      var car = new Car('toyota','hybrid',4);
+      console.log(car);
+      console.log(car.whistle());
+
+
+//////////////////////////////////////////
+      function SuperCar(brand, motor, wheels, superpower, heroname) {
+        this.brand = brand;
+        this.motor = motor;
+        this.wheels = wheels;
+        this.superpower = superpower;
+        this.heroname = heroname;
+      }
+
+
+      SuperCar.prototype = new Car();
+
+      SuperCar.prototype = {
+        fly: function() {
+          return 'fly me to the moon...';
+        }
+      }
+      SuperCar.prototype.constructor = SuperCar;
+
+      var superCar = new SuperCar('ferrari','hybrid',4,'fly','007');
+
+      console.log(superCar);
+      console.log(superCar.fly());
+
+//////////////////////////////////////////////
+
+      console.log(superCar instanceof SuperCar);
+
+    </script>
+  </body>
+</html>
