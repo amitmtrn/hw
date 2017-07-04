@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.js"
+      integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+      crossorigin="anonymous"></script>
+
+
+    <style>
+        .swimmer {
+            background: blue;
+            height: 20px;
+            width: 20px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            display: block;
+            color: white;
+        }
+        .pool {
+          border: solid 1px grey;
+          height:100px;
+          width:500px;
+        }
+        .circle {
+        	border-radius: 50%;
+        	width: 50px;
+        	height: 50px;
+          border: solid 2px grey;
+        }
+        .click {
+          cursor: pointer;
+        }
+     </style>
+
+
+  </head>
+  <body>
+
+  <div class="pool">
+    <div class="swimmer" data-js="swimmer1">1</div>
+    <div class="swimmer" data-js="swimmer2">2</div>
+    <div class="swimmer" data-js="swimmer3">3</div>
+  </div>
+  <div class="startSwim">
+    <div class="circle click" data-js="startJudge">
+        <br>
+        JUDGE
+    </div>
+    <button type="button" class="click" name="button" data-js="startButton">Start</button>
+  </div>
+    <script type="text/javascript">
+
+     jQuery(function($) {
+           var i=false;
+           $('.click').on('click', () => {
+
+              $('.swimmer').css('background-color', 'green');
+
+              $( '.swimmer' ).animate({ //elements to change
+                          'margin-left': '95%',
+                      },
+                    // Duration
+                      100,
+                  // Callback to invoke when the animation is finished
+                    function() {
+                        if (!i){
+                            alert('first win');
+                            $('.swimmer').css('background-color', 'blue');
+                            i=true;
+                        }
+
+                   });
+            });
+
+         });
+
+    </script>
+
+
+  </body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.js"
+      integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+      crossorigin="anonymous"></script>
+
+
+    <style>
+        .aliensDiv {
+            background: white;
+            height: 700px;
+            width: 900px;
+        }
+
+        .shooterDiv {
+          background: blue;
+          height: 100px;
+          width: 900px;
+
+        }
+
+        .alien {
+        	border-radius: 50%;
+        	width: 50px;
+        	height: 50px;
+          background: grey;
+          display: inline-block;
+          margin: 40px;
+        }
+
+        .bullet {
+          width: 50px;
+        	height: 50px;
+          background: red;
+          display: inline-block;
+            margin: 40px;
+        }
+     </style>
+
+
+  </head>
+  <body>
+
+    <div class="aliensDiv">
+      <div class="alien"></div>
+      <div class="alien"></div>
+      <div class="alien"></div>
+      <div class="alien"></div>
+      <div class="alien"></div>
+      <div class="alien"></div>
+
+    </div>
+   <div class="prep" style=" overflow:auto;"></div>
+   <div class="shooterDiv"></div>
+
+
+
+    <script type="text/javascript">
+
+     jQuery(function($) {
+           var i=false;
+
+
+        function repeat(i) {
+
+              $( '.alien' ).animate({ //elements to change
+                      'margin-top': '95%',
+                  },
+                // Duration
+                  10000,
+              // Callback to invoke when the animation is finished
+                function() {
+                    console.log('alien');
+               });
+
+             if(i <= 100) {
+               setTimeout(repeat, 1000, i + 1)
+             } else {
+               setTimeout(repeat, 1000, 1)
+             }
+          }
+          repeat(1);
+
+
+
+
+
+
+           $('.shooterDiv').on('click', () => {
+
+              $( ".shooterDiv" ).append( "<div class='bullet'></div>" );
+
+              $('div.bullet:last').animate({ //elements to change
+                      'margin-bottom': '76%',
+                  },
+                // Duration
+                  5000,
+              // Callback to invoke when the animation is finished
+                function() {
+                    console.log('bullet');
+               });
+
+             var circle1 = {radius: 20, x: 5, y: 5};
+             var circle2 = {radius: 12, x: 10, y: 5};
+
+             var dx = circle1.x - circle2.x;
+             var dy = circle1.y - circle2.y;
+             var distance = Math.sqrt(dx * dx + dy * dy);
+
+             if (distance < circle1.radius + circle2.radius) {
+                 // collision detected!
+             }
+
+
+
+             var rect1 = {x: 5, y: 5, width: 50, height: 50}
+             var rect2 = {x: 20, y: 10, width: 10, height: 10}
+
+             if (rect1.x < rect2.x + rect2.width &&
+                rect1.x + rect1.width > rect2.x &&
+                rect1.y < rect2.y + rect2.height &&
+                rect1.height + rect1.y > rect2.y) {
+                 // collision detected!
+             }
+
+            });
+
+         });
+
+    </script>
+
+
+  </body>
+</html>
