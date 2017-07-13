@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <style>
+
+
+table, th, td {
+    border: 1px solid black;
+}
+
+.circle1 {
+  width: 50px;
+  height: 50px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px;
+  background: red;
+  margin: auto;
+}
+.circle2 {
+  width: 50px;
+  height: 50px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px;
+  background: blue;
+  margin: auto;
+}
+
+    </style>
+
+  </head>
+  <body>
+    <table width="400" height="400" align="center">
+      <tr>
+        <th><button type="button" name="button1" class="tableButton">add</button></th>
+        <th><button type="button" name="button2" class="tableButton">add</button></th>
+        <th><button type="button" name="button3" class="tableButton">add</button></th>
+        <th><button type="button" name="button4" class="tableButton">add</button></th>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+
+<script>
+    var curColumn;
+    var boolClick = false;
+    var arrBoard=[];
+    var player=true; //first player is false
+    var playerNum;
+
+    //initialize array
+   for(var i = 0; i < 16; i++) {
+       arrBoard.push("-");
+   }
+
+
+    var tableCells = document.querySelectorAll("td");
+    var tableButtons = document.querySelectorAll(".tableButton");
+
+    for (var i=0; i < tableButtons.length; i++) {
+             tableButtons[i].addEventListener('click', function() {
+
+                //what column was clicked
+                curColumn = this.name.substr(this.name.length - 1);
+
+                //find empty place in column
+                for (var k=curColumn-1;k<16;k=k+4){
+                    if (arrBoard[k] == "-"){
+                      playerNum = player ? '1' : '2';
+                      arrBoard[k]= playerNum;//insert 1 for first player, 2 for second
+                      console.log("added player: " + arrBoard[k] + " to cell " + k);
+
+
+                      tableCells[k].innerHTML = "<div class='circle" + playerNum +"'></div>";
+                      player=!player;
+                      break;
+                  }
+                }
+
+                 var gameResult = checkWin();
+                if (gameResult!=0) {
+                    setTimeout(alert(gameResult + '\nThe game will reload'),location.reload(),3000);
+                    return;
+                };
+
+
+             });
+         };
+
+
+
+        // check row/column
+
+         function checkWin(){
+         //check rows
+             for (var x=1; x<5;x++){
+                 var intCounter1=0;
+                 var intCounter2=0;
+
+                 for (var y=(x-1)*4;y<x*4;y++){
+                   if(arrBoard[y]=='1') {
+                     intCounter1=intCounter1+1;
+                   }
+                   if(arrBoard[y]=='2') {
+                     intCounter2=intCounter2+1;
+                   }
+                   if (intCounter1==4){
+                     return 'player 1 wins at row ' + x;
+                   }
+                   if (intCounter1==4){
+                      return 'player 2 wins at row ' + x;
+                   }
+                 }
+             }
+
+             //check columns
+               for (var y=1; y<5;y++){
+                   var intCounter1=0;
+                   var intCounter2=0;
+
+                   for (var x=y-1;x<16;x=x+4){
+                     if(arrBoard[x]=='1') {
+                       intCounter1=intCounter1+1;
+                     }
+                     if(arrBoard[x]=='2') {
+                       intCounter2=intCounter2+1;
+                     }
+                     if (intCounter1==4){
+                        return 'player 1 wins at column ' + y;
+                     }
+                     if (intCounter1==4){
+                      return 'player 2 wins at column ' + y;
+                     }
+                   }
+               }
+
+             return 0;
+           };
+
+    function Board(name) {
+      this.name = name;
+    };
+
+    Board.prototype = {
+      checkRow: function() {
+        return 'check row';
+      },
+      checkColumn: function() {
+        return 'check column';
+      }
+    };
+
+  var board = new Board('gogo');
+
+</script>
+
+</html>
