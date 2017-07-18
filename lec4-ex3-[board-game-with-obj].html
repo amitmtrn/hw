@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <style>
+
+
+table, th, td {
+    border: 1px solid black;
+}
+
+.circle1 {
+  width: 50px;
+  height: 50px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px;
+  background: red;
+  margin: auto;
+}
+.circle2 {
+  width: 50px;
+  height: 50px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px;
+  background: blue;
+  margin: auto;
+}
+
+    </style>
+
+  </head>
+  <body>
+    <table width="400" height="400" align="center">
+      <tr>
+        <th><button type="button" name="button1" class="tableButton">add</button></th>
+        <th><button type="button" name="button2" class="tableButton">add</button></th>
+        <th><button type="button" name="button3" class="tableButton">add</button></th>
+        <th><button type="button" name="button4" class="tableButton">add</button></th>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+
+<script>
+
+(function() {
+
+     var game = {
+
+       arrBoard: [],
+       tableCells: document.querySelectorAll("td"),
+       player: true,
+
+       init: function() {
+
+               //initialize array
+              for(var i = 0; i < 16; i++) {
+                  this.arrBoard.push("-");
+              }
+
+              var tableButtons = document.querySelectorAll(".tableButton");
+              var curColumn;
+
+              for (var i=0; i < tableButtons.length; i++) {
+                      curColumn = tableButtons[i].toString().substr(tableButtons[i].name.length - 1);
+                       tableButtons[i].addEventListener('click', this.addMove(curColumn).bind(this,curColumn));
+                     };
+
+             },
+
+       addMove: function(curColumn) {
+
+         //find empty place in column
+         for (var k=curColumn-1;k<16;k=k+4){
+             if (this.arrBoard[k] == "-"){
+               playerNum = this.player ? '1' : '2';
+               this.arrBoard[k]= playerNum;//insert 1 for first player, 2 for second
+               console.log("added player: " + this.arrBoard[k] + " to cell " + k);
+
+
+               this.tableCells[k].innerHTML = "<div class='circle" + playerNum +"'></div>";
+               this.player=!this.player;
+               break;
+           }
+         }
+
+         var gameResult = this.checkWin().bind(this);
+         if (gameResult!=0) {
+             setTimeout(alert(gameResult + '\nThe game will reload'),location.reload(),3000);
+             return;
+         };
+
+       },
+
+
+       checkWin: function() {
+         //check rows
+             for (var x=1; x<5;x++){
+                 var intCounter1=0;
+                 var intCounter2=0;
+
+                 for (var y=(x-1)*4;y<x*4;y++){
+                   if(this.arrBoard[y]=='1') {
+                     intCounter1=intCounter1+1;
+                   }
+                   if(this.arrBoard[y]=='2') {
+                     intCounter2=intCounter2+1;
+                   }
+                   if (intCounter1==4){
+                     return 'player 1 wins at row ' + x;
+                   }
+                   if (intCounter1==4){
+                      return 'player 2 wins at row ' + x;
+                   }
+                 }
+             }
+
+             //check columns
+               for (var y=1; y<5;y++){
+                   var intCounter1=0;
+                   var intCounter2=0;
+
+                   for (var x=y-1;x<16;x=x+4){
+                     if(this.arrBoard[x]=='1') {
+                       intCounter1=intCounter1+1;
+                     }
+                     if(this.arrBoard[x]=='2') {
+                       intCounter2=intCounter2+1;
+                     }
+                     if (intCounter1==4){
+                        return 'player 1 wins at column ' + y;
+                     }
+                     if (intCounter1==4){
+                      return 'player 2 wins at column ' + y;
+                     }
+                   }
+               }
+
+             return 0;
+       }
+     }
+
+     game.init();
+   }());
+
+
+
+</script>
+
+</html>

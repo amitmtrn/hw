@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+
+
+    <style>
+
+        .shooterDiv {
+          background: blue;
+          height: 100px;
+          width: 100%;
+
+        }
+
+        .ball {
+         background: green;
+         width: 200px;
+         height: 200px;
+         border-radius: 50%;
+         position: absolute;
+       }
+
+       .bullet {
+        background: red;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        position: absolute;
+        bottom:0;
+      }
+
+       .board {
+         width: 100%;
+         height: 800px;
+         background: #999;
+         position: relative;
+       }
+
+       /*[data-ball-id="2"] {
+         right: 0;
+       }*/
+
+     </style>
+
+
+  </head>
+  <body>
+
+    <div class="board">
+        <div class="ball" data-ball-id="1"></div>
+        <div class="ball" data-ball-id="2"></div>
+      <!--  <div class="bullet" data-bullet-id="1"></div>
+        <div class="bullet" data-bullet-id="2"></div>-->
+   </div>
+   <div class="shooterDiv"></div>
+
+
+   <script
+       src="https://code.jquery.com/jquery-3.2.1.js"
+       integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+       crossorigin="anonymous">
+     </script>
+
+    <script type="text/javascript">
+
+     jQuery(function($) {
+        var posX;
+        var bulletCounter = 0;
+        // create 100 aliens
+        function repeat(i) {
+
+            $( ".board" ).append( "<div class='ball' data-ball-id=" + i + "></div>" );
+            var $ball = $("[data-ball-id=" + i + "]");
+            sizeRand = Math.ceil(Math.random() * 200)+50;
+            $ball.css({left: Math.ceil(Math.random() * 800), height:sizeRand, width: sizeRand});
+
+            $ball.animate({bottom: 0}, {
+              duration: 5000
+            });
+
+            if(i <= 100) {
+              setTimeout(repeat, 1000, i + 1)
+            } else {
+              setTimeout(repeat, 1000, 1)
+            }
+
+          }
+
+        repeat(1);
+
+
+
+
+
+        $('.shooterDiv').on('click', (e) => {
+          bulletCounter++;
+          posX = e.pageX;
+
+
+              $( ".shooterDiv" ).append( "<div class='bullet' data-bullet-id=" + bulletCounter + "></div>" );
+
+              var $curBullet = $("[data-bullet-id=" + bulletCounter +"]");
+              $curBullet.css({left: posX});
+
+              $curBullet.animate({top: 0}, {
+
+                duration: 3000,
+
+                step: function(){
+
+                  //get all balls
+                   $(".ball").each( function(){
+
+                     var circle1 = {radius: 100, x: $(this).position().left, y:  $(this).position().top};
+                     var circle2 = {radius: 100, x: $curBullet.position().left, y: $curBullet.position().top};
+
+                     var dx = circle1.x - circle2.x;
+                     var dy = circle1.y - circle2.y;
+                     var distance = Math.sqrt(dx * dx + dy * dy);
+
+                     if (distance < circle1.radius + circle2.radius) {
+                       $curBullet.remove();
+                        $(this).remove();
+                     }
+
+                   });
+
+                }
+              });
+       });
+     });
+
+    </script>
+
+
+  </body>
+</html>
