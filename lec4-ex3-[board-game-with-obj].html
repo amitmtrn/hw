@@ -89,8 +89,8 @@ table, th, td {
               var curColumn;
 
               for (var i=0; i < tableButtons.length; i++) {
-                      curColumn = tableButtons[i].toString().substr(tableButtons[i].name.length - 1);
-                       tableButtons[i].addEventListener('click', this.addMove(curColumn).bind(this,curColumn));
+                      curColumn = tableButtons[i].name.substr(tableButtons[i].name.length - 1);
+                       tableButtons[i].addEventListener('click', this.addMove.bind(this, curColumn));
                      };
 
              },
@@ -111,7 +111,7 @@ table, th, td {
            }
          }
 
-         var gameResult = this.checkWin().bind(this);
+         var gameResult = this.checkWin();
          if (gameResult!=0) {
              setTimeout(alert(gameResult + '\nThe game will reload'),location.reload(),3000);
              return;
